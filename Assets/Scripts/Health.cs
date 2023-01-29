@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(HealthBar))]
 public class Health : MonoBehaviour
@@ -9,14 +10,12 @@ public class Health : MonoBehaviour
     [SerializeField] private float _damage;
     [SerializeField] private float _heal;
 
-    private HealthBar _healthBar;
     private float _currentHealth;
-
+    public event UnityAction<float> HealthChanged;
     public float MaxHealth => _maxHealth;
 
     private void Start()
     {
-        _healthBar = GetComponent<HealthBar>();
         _currentHealth = _maxHealth;
     }
 
@@ -26,12 +25,12 @@ public class Health : MonoBehaviour
 
         if (_currentHealth <= _maxHealth)
         {
-            _healthBar.StartCoroutine(_currentHealth);
+            HealthChanged?.Invoke(_currentHealth);
         }
         else
         {
             _currentHealth = _maxHealth;
-            _healthBar.StartCoroutine(_currentHealth);
+            HealthChanged?.Invoke(_currentHealth);
         }    
     }
 
@@ -41,12 +40,12 @@ public class Health : MonoBehaviour
 
         if (_currentHealth > 0)
         {
-            _healthBar.StartCoroutine(_currentHealth);
+            HealthChanged?.Invoke(_currentHealth);
         }
         else
         {
             _currentHealth = 0;
-            _healthBar.StartCoroutine(_currentHealth);
+            HealthChanged?.Invoke(_currentHealth);
         }
     }
 }

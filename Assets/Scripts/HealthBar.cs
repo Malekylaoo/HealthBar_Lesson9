@@ -12,12 +12,25 @@ public class HealthBar : MonoBehaviour
     private Slider _slider;
     private Health _heatlh;
 
-    private void Start()
+    private void Awake()
     {
         _slider = GetComponent<Slider>();
         _heatlh = GetComponent<Health>();
+    }
 
+    private void Start()
+    {
         _slider.value = _heatlh.MaxHealth;
+    }
+
+    private void OnEnable()
+    {
+        _heatlh.HealthChanged += StartCoroutine;
+    }
+
+    private void OnDisable()
+    {
+        _heatlh.HealthChanged -= StartCoroutine;
     }
 
     private IEnumerator ChangeValue(float target)
@@ -36,7 +49,7 @@ public class HealthBar : MonoBehaviour
         _coroutine = coroutine;
     }
 
-    public void StartCoroutine(float value)
+    private void StartCoroutine(float value)
     {
         StartChangeValue(StartCoroutine(ChangeValue(value)));
     }
