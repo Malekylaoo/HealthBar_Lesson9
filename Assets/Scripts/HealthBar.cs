@@ -25,12 +25,12 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _heatlh.HealthChanged += StartCoroutine;
+        _heatlh.HealthChanged += OnStartChangeValue;
     }
 
     private void OnDisable()
     {
-        _heatlh.HealthChanged -= StartCoroutine;
+        _heatlh.HealthChanged -= OnStartChangeValue;
     }
 
     private IEnumerator ChangeValue(float target)
@@ -42,15 +42,15 @@ public class HealthBar : MonoBehaviour
         }
     }
 
-    private void StartChangeValue(Coroutine coroutine)
+    private void CheckCoroutine(Coroutine coroutine)
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
         _coroutine = coroutine;
     }
 
-    private void StartCoroutine(float value)
+    private void OnStartChangeValue(float value)
     {
-        StartChangeValue(StartCoroutine(ChangeValue(value)));
+        CheckCoroutine(StartCoroutine(ChangeValue(value)));
     }
 }

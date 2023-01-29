@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(HealthBar))]
 public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
@@ -11,7 +10,9 @@ public class Health : MonoBehaviour
     [SerializeField] private float _heal;
 
     private float _currentHealth;
+
     public event UnityAction<float> HealthChanged;
+
     public float MaxHealth => _maxHealth;
 
     private void Start()
