@@ -8,51 +8,59 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _damage;
     [SerializeField] private float _heal;
+    [SerializeField] private float _speed;
 
+    private Coroutine _coroutine; 
     private float _currentHealth;
-    private PlayerInput _playerInput;
     private Slider _slider;
 
-    private void Awake()
+    private void Start()
     {
-        _playerInput = new PlayerInput();
-        _playerInput.Enable();
         _slider = GetComponent<Slider>();
         _currentHealth = _maxHealth;
         _slider.value = _maxHealth;
     }
 
-    private void Start()
+    private IEnumerator ChangeValue(float target)
     {
-        _playerInput.Player.TakeDamage.performed += ctx => TakeDamage();
-        _playerInput.Player.Heal.performed += ctx => Heal();  
-    }
-
-    private void OnDisable()
-    {
-        _playerInput.Disable();
-    }
-
-    public void TakeDamage()
-    {
-        if(_currentHealth > 0)
+        while (_slider.value != target)
         {
-            _currentHealth -= _damage;
-            ChangeValue(_currentHealth);
+            _slider.value = Mathf.MoveTowards(_slider.value, target, Time.deltaTime * _speed); ;
+            yield return null;
         }
     }
 
-    public void Heal()
+    private void StartChangeValue(Coroutine coroutine)
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+        _coroutine = coroutine;
+    }
+
+    private void TakeDamage()
+    {
+        _currentHealth -= _damage;
+
+        if (_currentHealth > 0)
+        {
+            StartChangeValue(StartCoroutine(ChangeValue(_currentHealth)));
+        }
+        else
+        {
+            _currentHealth = 0;
+            StartChangeValue(StartCoroutine(ChangeValue(_currentHealth)));
+        }
+    }
+
+    private void Heal()
     {
         _currentHealth += _heal;
+
         if (_currentHealth <= _maxHealth)
-            ChangeValue(_currentHealth);
+            StartChangeValue(StartCoroutine(ChangeValue(_currentHealth)));
         else
             _currentHealth = _maxHealth;
     }
 
-    public void ChangeValue(float value)
-    {
-        _slider.value = value;
-    }    
+    
 }
