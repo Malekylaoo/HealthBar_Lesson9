@@ -355,6 +355,7 @@
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/InputAction/PlayerInput.cs"
+"Assets/Scripts/Health.cs"
 "Assets/Scripts/HealthBar.cs"
 -langversion:9.0
 

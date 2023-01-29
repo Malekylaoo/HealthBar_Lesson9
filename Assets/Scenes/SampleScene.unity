@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 567374530}
   - component: {fileID: 567374531}
   - component: {fileID: 567374532}
+  - component: {fileID: 567374533}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -501,10 +502,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3935423443893a4aa54ee1013bf0219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 20
+--- !u!114 &567374533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567374529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 038df47eb6383484fbd06d14fedb6243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _maxHealth: 100
   _damage: 20
   _heal: 10
-  _speed: 10
 --- !u!1 &572517033
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +785,7 @@ GameObject:
   - component: {fileID: 1055518373}
   - component: {fileID: 1055518372}
   m_Layer: 5
-  m_Name: Button
+  m_Name: DamageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -843,8 +856,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 567374532}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+      - m_Target: {fileID: 567374533}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
         m_MethodName: TakeDamage
         m_Mode: 1
         m_Arguments:
@@ -1185,7 +1198,7 @@ GameObject:
   - component: {fileID: 1883060261}
   - component: {fileID: 1883060260}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: HealButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1256,8 +1269,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 567374532}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+      - m_Target: {fileID: 567374533}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
         m_MethodName: Heal
         m_Mode: 1
         m_Arguments:

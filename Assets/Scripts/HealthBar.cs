@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Health))]
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private float _maxHealth;
-    [SerializeField] private float _damage;
-    [SerializeField] private float _heal;
     [SerializeField] private float _speed;
 
     private Coroutine _coroutine; 
-    private float _currentHealth;
     private Slider _slider;
+    private Health _heatlh;
 
     private void Start()
     {
         _slider = GetComponent<Slider>();
-        _currentHealth = _maxHealth;
-        _slider.value = _maxHealth;
+        _heatlh = GetComponent<Health>();
+
+        _slider.value = _heatlh.MaxHealth;
     }
 
     private IEnumerator ChangeValue(float target)
     {
         while (_slider.value != target)
         {
-            _slider.value = Mathf.MoveTowards(_slider.value, target, Time.deltaTime * _speed); ;
+            _slider.value = Mathf.MoveTowards(_slider.value, target, Time.deltaTime * _speed);
             yield return null;
         }
     }
@@ -37,30 +36,8 @@ public class HealthBar : MonoBehaviour
         _coroutine = coroutine;
     }
 
-    private void TakeDamage()
+    public void StartCoroutine(float value)
     {
-        _currentHealth -= _damage;
-
-        if (_currentHealth > 0)
-        {
-            StartChangeValue(StartCoroutine(ChangeValue(_currentHealth)));
-        }
-        else
-        {
-            _currentHealth = 0;
-            StartChangeValue(StartCoroutine(ChangeValue(_currentHealth)));
-        }
+        StartChangeValue(StartCoroutine(ChangeValue(value)));
     }
-
-    private void Heal()
-    {
-        _currentHealth += _heal;
-
-        if (_currentHealth <= _maxHealth)
-            StartChangeValue(StartCoroutine(ChangeValue(_currentHealth)));
-        else
-            _currentHealth = _maxHealth;
-    }
-
-    
 }

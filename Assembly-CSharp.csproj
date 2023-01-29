@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\InputAction\PlayerInput.cs" />
+    <Compile Include="Assets\Scripts\Health.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
