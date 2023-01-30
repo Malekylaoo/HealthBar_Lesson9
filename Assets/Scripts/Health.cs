@@ -6,8 +6,6 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float _maxHealth;
-    [SerializeField] private float _damage;
-    [SerializeField] private float _heal;
 
     private float _currentHealth;
 
@@ -20,33 +18,27 @@ public class Health : MonoBehaviour
         _currentHealth = _maxHealth;
     }
 
-    public void Heal()
+    public void Heal(int heal)
     {
-        _currentHealth += _heal;
+        _currentHealth += heal;
 
-        if (_currentHealth <= _maxHealth)
-        {
-            HealthChanged?.Invoke(_currentHealth);
-        }
-        else
+        if (_currentHealth >= _maxHealth)
         {
             _currentHealth = _maxHealth;
-            HealthChanged?.Invoke(_currentHealth);
-        }    
+        }
+
+        HealthChanged?.Invoke(_currentHealth);
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
-        _currentHealth -= _damage;
+        _currentHealth -= damage;
 
-        if (_currentHealth > 0)
-        {
-            HealthChanged?.Invoke(_currentHealth);
-        }
-        else
+        if (_currentHealth < 0)
         {
             _currentHealth = 0;
-            HealthChanged?.Invoke(_currentHealth);
         }
+
+        HealthChanged?.Invoke(_currentHealth);
     }
 }
